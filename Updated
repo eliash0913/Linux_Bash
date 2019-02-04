@@ -50,22 +50,21 @@ function Update_Default_Preset {
 }
 
 function Update_NTP_UNIT {
-  local RUNLEVEL_PREFIX_FROM=$(ls ${NTP_UNIT_DIR}|grep "${PREF_NTP_FROM}" |sed 's/-.*//')
-  local RUNLEVEL_POSTFIX_FROM=$(ls ${NTP_UNIT_DIR}|grep "${PREF_NTP_FROM}" |sed 's/.*-//')
-  local RUNLEVEL_PREFIX_TO=$(ls ${NTP_UNIT_DIR}|grep "${PREF_NTP_TO}" |sed 's/-.*//')
-  local RUNLEVEL_POSTFIX_TO=$(ls ${NTP_UNIT_DIR}|grep "${PREF_NTP_TO}" |sed 's/.*-//')
+  local RUNLEVEL_PREFIX_FROM=$(ls -1 ${NTP_UNIT_DIR}|grep "${PREF_NTP_FROM}" |sed 's/-.*//')
+  local RUNLEVEL_POSTFIX_FROM=$(ls -1 ${NTP_UNIT_DIR}|grep "${PREF_NTP_FROM}" |sed 's/.*-//')
+  local RUNLEVEL_PREFIX_TO=$(ls -1 ${NTP_UNIT_DIR}|grep "${PREF_NTP_TO}" |sed 's/-.*//')
+  local RUNLEVEL_POSTFIX_TO=$(ls -1 ${NTP_UNIT_DIR}|grep "${PREF_NTP_TO}" |sed 's/.*-//')
   local RUNLEVEL_COMPLETED_TO_FROM=${NTP_UNIT_DIR}/${RUNLEVEL_PREFIX_TO}-${RUNLEVEL_POSTFIX_FROM}
   local RUNLEVEL_COMPLETED_FROM_FROM=${NTP_UNIT_DIR}/${RUNLEVEL_PREFIX_FROM}-${RUNLEVEL_POSTFIX_FROM}
   local RUNLEVEL_COMPLETED_FROM_TO=${NTP_UNIT_DIR}/${RUNLEVEL_PREFIX_FROM}-${RUNLEVEL_POSTFIX_TO}
   local RUNLEVEL_COMPLETED_TO_TO=${NTP_UNIT_DIR}/${RUNLEVEL_PREFIX_TO}-${RUNLEVEL_POSTFIX_TO}
- if [ ${RUNLEVEL_PREFIX_TO} -gt ${RUNLEVEL_PREFIX_FROM} ]
+ if [ $((RUNLEVEL_PREFIX_TO)) -gt $((RUNLEVEL_PREFIX_FROM)) ]
     then
         mv ${RUNLEVEL_COMPLETED_FROM_FROM} ${RUNLEVEL_COMPLETED_TO_FROM}
         mv ${RUNLEVEL_COMPLETED_TO_TO} ${RUNLEVEL_COMPLETED_FROM_TO}
     else
       echo "NTP-UNIT list does NOT need any changes"
-       echo "NTP-UNIT list does NOT need any changes"
-  fi
+        fi
 }
 
 function UpdateNTP_From_Hostname_IP {
@@ -78,7 +77,7 @@ server ${SECONDARY_NTP_SERVER}
 EOF
   else
     echo "ntp.conf does NOT exist"
-  fi
+ fi
 }
 
 function Deactivate_NTP_DHCLIENT.D {
@@ -130,4 +129,3 @@ EOF
 
 USAGE
 
-      
