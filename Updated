@@ -87,6 +87,7 @@ function Deactivate_NTP_DHCLIENT.D {
 
 function Initiate_NTP {
   timedatectl set-ntp false
+  systemctl disable chronyd
   timedatectl set-ntp true
   systemctl restart ntpd
 }
